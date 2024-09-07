@@ -1,0 +1,30 @@
+## Workflow
+
+name: Build Docker Image
+on:
+  push:
+    branches: ["main", "dev"]
+  pull_request:
+    branches: ["main", "dev"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+  
+      - name: Build Docker image
+        run: docker build . --file Dockerfile --tag ${{ secrets.CONTAINER_REGISTRY_ENDPOINT }}/atut-group-4/mlapp:latest
+  
+      - name: Log in to Scaleway Container Registry
+        run: |
+          echo "${{ secrets.SCALEWAY_ACCESS_KEY }}:${{ secrets.SCALEWAY_SECRET_KEY }}" | docker login ${{ secrets.CONTAINER_REGISTRY_ENDPOINT }} --username ${{ secrets.SCALEWAY_ACCESS_KEY }} --password-stdin
+  
+      - name: Push Docker image to Scaleway
+        run: docker push ${{ secrets.CONTAINER_REGISTRY_ENDPOINT }}/{{ secrets.CONTAINER_NAMESPACE }}/your-image:latest
+
