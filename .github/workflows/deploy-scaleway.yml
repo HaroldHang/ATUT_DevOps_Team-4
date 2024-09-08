@@ -27,12 +27,12 @@ jobs:
         needs: build
 
         steps:
-        -   name: Setup SSH key
-            uses: shimataro/ssh-key-action@v2
-            with:   
-                key: ${{ secrets.SSH_PRIVATE_KEY }}
-                name: id_rsa # optional
-                known_hosts: ${{ secrets.KNOWN_HOSTS }}
+        #-   name: Setup SSH key
+        #    uses: shimataro/ssh-key-action@v2
+        #    with:   
+        #        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        #        name: id_rsa # optional
+        #        known_hosts: ${{ secrets.KNOWN_HOSTS }}
         -   name: Login to Scaleway Container Registry
             uses: docker/login-action@v3
             with:
@@ -46,7 +46,7 @@ jobs:
                 username: ${{ secrets.SSH_USERNAME }}
                 key: ${{ secrets.SSH_PRIVATE_KEY }}
                 #key_path: 
-                port: 22
+                #port: 22
                 script: |
                     
                     docker pull ${{ secrets.CONTAINER_REGISTRY_ENDPOINT }}/ml-app
