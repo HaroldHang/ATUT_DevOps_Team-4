@@ -1,7 +1,7 @@
 name: Build Docker Compose Images
 on:
     push:
-        branches: ["dev-scaleway-compose"]
+        branches: ["deploy-scaleway-compose"]
     #pull_request:
     #  branches: ["main", "dev"]
 
