@@ -17,7 +17,7 @@ jobs:
                 password: ${{ secrets.SCALEWAY_API_KEY }}
                 registry: ${{ secrets.CONTAINER_REGISTRY_ENDPOINT }}
         -   name: Build the Docker image
-            run: docker build -f ./ml-app/Dockerfile --build-context source-code=${{secrets.GIT_APP_URL}} -t ${{ secrets.CONTAINER_REGISTRY_ENDPOINT }}/ml-app-test:latest
+            run: docker buildx build --build-context source-code=${{secrets.GIT_APP_URL}} -f ./ml-app/Dockerfile -t ${{ secrets.CONTAINER_REGISTRY_ENDPOINT }}/ml-app-test:latest
         -   name: Push the Docker Image
             run: docker push ${{ secrets.CONTAINER_REGISTRY_ENDPOINT }}/ml-app-test:latest
         
